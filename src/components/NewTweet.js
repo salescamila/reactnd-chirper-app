@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-//import { formatTweet, formatDate } from '../utils/helpers'
+import { handleAddTweet } from '../actions/tweets'
 
 class NewTweet extends Component {
   state = {
@@ -16,27 +16,26 @@ class NewTweet extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
 
-    const { text } = this.props
+    const { text } = this.state
+    const { dispatch, id } = this.props
 
-    // todo: Add Tweet to Store
-
-    console.log('New Tweet: ', text)
+    dispatch(handleAddTweet(text, id))
 
     this.setState(() => ({
       text: ''
     }))
   }
-  render () {
+  render() {
     const { text } = this.state
 
-    // todo: Redirect to / if submitted
+    {/* todo: Redirect to / if submitted */}
 
     const tweetLeft = 280 - text.length
 
     return (
-      <div className='new-tweet'>
+      <div>
         <h3 className='center'>Compose new Tweet</h3>
-        <form className='new-tweet' onSubmite={this.handleSubmit}>
+        <form className='new-tweet' onSubmit={this.handleSubmit}>
           <textarea
             placeholder="What's happening?"
             value={text}
